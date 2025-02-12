@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumer Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .quiz-container {
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .answer-btn {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .answer-btn:hover {
+            background: #2980b9;
+        }
+        .result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>What Kind of Consumer Are You?</h2>
+        <div id="question-container">
+            <p class="question" id="question">Loading...</p>
+            <button class="answer-btn" onclick="selectAnswer(0)"></button>
+            <button class="answer-btn" onclick="selectAnswer(1)"></button>
+            <button class="answer-btn" onclick="selectAnswer(2)"></button>
+        </div>
+        <p class="result" id="result"></p>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What do you prioritize when shopping?",
+                answers: ["Price", "Quality", "Brand Reputation"],
+                scores: [1, 2, 3]
+            },
+            {
+                question: "How often do you shop online?",
+                answers: ["Rarely", "Sometimes", "Frequently"],
+                scores: [1, 2, 3]
+            },
+            {
+                question: "Do you prefer local or global brands?",
+                answers: ["Local", "Both", "Global"],
+                scores: [1, 2, 3]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let totalScore = 0;
+
+        function loadQuestion() {
+            if (currentQuestion < questions.length) {
+                document.getElementById("question").innerText = questions[currentQuestion].question;
+                const buttons = document.querySelectorAll(".answer-btn");
+                questions[currentQuestion].answers.forEach((answer, index) => {
+                    buttons[index].innerText = answer;
+                });
+            } else {
+                showResult();
+            }
+        }
+
+        function selectAnswer(index) {
+            totalScore += questions[currentQuestion].scores[index];
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function showResult() {
+            let resultText = "";
+            if (totalScore <= 3) {
+                resultText = "You are a Budget-Conscious Consumer!";
+            } else if (totalScore <= 6) {
+                resultText = "You are a Quality-Focused Consumer!";
+            } else {
+                resultText = "You are a Brand-Loyal Consumer!";
+            }
+            document.getElementById("question-container").style.display = "none";
+            document.getElementById("result").innerText = resultText;
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
