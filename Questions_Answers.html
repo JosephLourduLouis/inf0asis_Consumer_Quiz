@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consumer Quiz</title>
+    <title>Spot the Misinformation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,46 +37,46 @@
         .answer-btn:hover {
             background: #2980b9;
         }
-        .result {
-            font-size: 20px;
-            font-weight: bold;
+        .feedback {
+            font-size: 16px;
             margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="quiz-container">
-        <h2>What Kind of Consumer Are You?</h2>
-        <div id="question-container">
-            <p class="question" id="question">Loading...</p>
-            <button class="answer-btn" onclick="selectAnswer(0)"></button>
-            <button class="answer-btn" onclick="selectAnswer(1)"></button>
-            <button class="answer-btn" onclick="selectAnswer(2)"></button>
-        </div>
-        <p class="result" id="result"></p>
+        <h2>Can You Spot the Misinformation?</h2>
+        <p class="question" id="question">Loading...</p>
+        <button class="answer-btn" onclick="selectAnswer(0)"></button>
+        <button class="answer-btn" onclick="selectAnswer(1)"></button>
+        <button class="answer-btn" onclick="selectAnswer(2)"></button>
+        <p class="feedback" id="feedback"></p>
     </div>
 
     <script>
         const questions = [
             {
-                question: "What do you prioritize when shopping?",
-                answers: ["Price", "Quality", "Brand Reputation"],
-                scores: [1, 2, 3]
+                question: "This viral tweet claims 'Drinking lemon water cures cancer.' Is this statement real or fake?",
+                answers: ["Real", "Misleading", "Fake"],
+                correct: 2,
+                explanation: "Fake! No scientific evidence supports lemon water as a cancer cure."
             },
             {
-                question: "How often do you shop online?",
-                answers: ["Rarely", "Sometimes", "Frequently"],
-                scores: [1, 2, 3]
+                question: "'NASA confirmed the Earth is cooling due to reduced sun activity' - Is this credible?",
+                answers: ["Real", "Misleading", "Fake"],
+                correct: 1,
+                explanation: "Misleading! NASA discusses climate cycles, but long-term data confirms global warming."
             },
             {
-                question: "Do you prefer local or global brands?",
-                answers: ["Local", "Both", "Global"],
-                scores: [1, 2, 3]
+                question: "A news site claims '5G towers spread COVID-19.' What’s the truth?",
+                answers: ["Real", "Misleading", "Fake"],
+                correct: 2,
+                explanation: "Fake! COVID-19 is caused by a virus, not radio waves."
             }
         ];
 
         let currentQuestion = 0;
-        let totalScore = 0;
+        let score = 0;
 
         function loadQuestion() {
             if (currentQuestion < questions.length) {
@@ -85,28 +85,34 @@
                 questions[currentQuestion].answers.forEach((answer, index) => {
                     buttons[index].innerText = answer;
                 });
+                document.getElementById("feedback").innerText = "";
             } else {
-                showResult();
+                showFinalScore();
             }
         }
 
         function selectAnswer(index) {
-            totalScore += questions[currentQuestion].scores[index];
+            const feedback = document.getElementById("feedback");
+            if (index === questions[currentQuestion].correct) {
+                score++;
+                feedback.innerText = "✅ Correct! " + questions[currentQuestion].explanation;
+            } else {
+                feedback.innerText = "❌ Incorrect! " + questions[currentQuestion].explanation;
+            }
             currentQuestion++;
-            loadQuestion();
+            setTimeout(loadQuestion, 2000);
         }
 
-        function showResult() {
-            let resultText = "";
-            if (totalScore <= 3) {
-                resultText = "You are a Budget-Conscious Consumer!";
-            } else if (totalScore <= 6) {
-                resultText = "You are a Quality-Focused Consumer!";
+        function showFinalScore() {
+            let resultMessage = "You scored " + score + " out of " + questions.length + ".";
+            if (score === questions.length) {
+                resultMessage += " 🎉 You're a media literacy pro!";
+            } else if (score >= 2) {
+                resultMessage += " 🔍 Good job! Keep sharpening your skills.";
             } else {
-                resultText = "You are a Brand-Loyal Consumer!";
+                resultMessage += " 🚨 Be careful! Fake news is everywhere.";
             }
-            document.getElementById("question-container").style.display = "none";
-            document.getElementById("result").innerText = resultText;
+            document.querySelector(".quiz-container").innerHTML = "<h2>Game Over</h2><p>" + resultMessage + "</p>";
         }
 
         loadQuestion();
