@@ -1,2 +1,2 @@
-# inf0asis_BuzzFeed_Quiz
+# Inf0asis BuzzFeed Quiz
 What kind of consumer are you?
