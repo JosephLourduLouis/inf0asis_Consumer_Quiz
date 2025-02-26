@@ -118,6 +118,26 @@
                     "AI is the future of journalism, and I embrace it 🤖"
                 ],
                 scores: ["criticalThinker", "socialScroller", "viralBeliever", "aiOptimist"]
+            },
+            {
+                question: "How do you react when a celebrity shares a controversial post?",
+                answers: [
+                    "Wait for verified sources before forming an opinion 🔍",
+                    "Comment your thoughts immediately 🗣️",
+                    "Trust it because they’re famous 🌟",
+                    "Use AI tools to see if it’s real 🤖"
+                ],
+                scores: ["criticalThinker", "socialScroller", "viralBeliever", "aiOptimist"]
+            },
+            {
+                question: "You see a viral video about a new 'cure' for common diseases. What’s your first reaction?",
+                answers: [
+                    "Check if scientists support it 🔬",
+                    "Like and share it to raise awareness 👍",
+                    "Believe it—it’s trending! 🚀",
+                    "Use an AI fact-checking tool 🤖"
+                ],
+                scores: ["criticalThinker", "socialScroller", "viralBeliever", "aiOptimist"]
             }
         ];
 
@@ -170,16 +190,12 @@
             } else if (personalityType === "aiOptimist") {
                 resultTitle = "🤖 You are The AI Optimist!";
                 resultDescription = "You embrace AI-generated news and trust technology to filter content. AI is powerful, but always double-check facts with human verification.";
-            } else {
-                resultTitle = "❓ Unknown Result";
-                resultDescription = "It seems we couldn't determine your media consumption type. Try retaking the quiz!";
             }
 
             document.querySelector(".quiz-container").innerHTML = `
                 <h2>Quiz Complete!</h2>
                 <div class="consumer-type">${resultTitle}</div>
                 <p>${resultDescription}</p>
-                <p>Want to improve your media literacy? Explore <b>infOasis</b> for more resources!</p>
             `;
         }
 
