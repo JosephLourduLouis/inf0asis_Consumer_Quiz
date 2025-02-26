@@ -44,21 +44,15 @@
             margin-top: 15px;
             font-weight: bold;
         }
-        .result {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 20px;
-            color: #2c3e50;
-        }
         .consumer-type {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
-            color: #3498db;
-            margin-top: 15px;
-            border: 2px solid #3498db;
+            color: #fff;
+            background: #3498db;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px auto;
             display: inline-block;
-            padding: 10px;
-            border-radius: 10px;
         }
     </style>
 </head>
@@ -93,7 +87,7 @@
                     "Search for similar articles before deciding 🤔",
                     "Ask an AI tool if it's real 🤖"
                 ],
-                scores: ["criticalThinker", "viralBeliever", "newsJunkie", "aiOptimist"]
+                scores: ["criticalThinker", "viralBeliever", "socialScroller", "aiOptimist"]
             },
             {
                 question: "A friend tells you a crazy conspiracy theory. How do you react?",
@@ -141,7 +135,7 @@
                 const buttons = document.querySelectorAll(".answer-btn");
                 questions[currentQuestion].answers.forEach((answer, index) => {
                     buttons[index].innerText = answer;
-                    buttons[index].style.display = "block"; // Show button
+                    buttons[index].style.display = "block";
                 });
                 document.getElementById("feedback").innerText = "";
             } else {
@@ -151,10 +145,10 @@
 
         function selectAnswer(index) {
             let selectedCategory = questions[currentQuestion].scores[index];
-            scoreTally[selectedCategory]++;
+            scoreTally[selectedCategory]++; // Add one point to selected category
 
             currentQuestion++;
-            setTimeout(loadQuestion, 1000); // Load next question
+            setTimeout(loadQuestion, 1000);
         }
 
         function showFinalResult() {
@@ -176,13 +170,15 @@
             } else if (personalityType === "aiOptimist") {
                 resultTitle = "🤖 You are The AI Optimist!";
                 resultDescription = "You embrace AI-generated news and trust technology to filter content. AI is powerful, but always double-check facts with human verification.";
+            } else {
+                resultTitle = "❓ Unknown Result";
+                resultDescription = "It seems we couldn't determine your media consumption type. Try retaking the quiz!";
             }
 
             document.querySelector(".quiz-container").innerHTML = `
                 <h2>Quiz Complete!</h2>
-                <h3>${resultTitle}</h3>
-                <p>${resultDescription}</p>
                 <div class="consumer-type">${resultTitle}</div>
+                <p>${resultDescription}</p>
                 <p>Want to improve your media literacy? Explore <b>infOasis</b> for more resources!</p>
             `;
         }
